@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "DDPhotoPicker"
+  s.name         = "DDPhotoPicker-AV"
   s.version      = "1.0.0"
   s.summary      = "take photo in program"
   s.homepage     = "https://github.com/chenddcoder/DDPhotoPicker"

@@ -56,7 +56,7 @@
     [v addSubview:funcV];
     self.takePhotoBtn=[[UIButton alloc]init];
     self.takePhotoBtn.frame=CGRectMake((width-63)/2, (115-63)/2, 63, 63);
-    NSString * db_bundle=[[NSBundle mainBundle]pathForResource:@"DDTakePhotoViewController" ofType:@"bundle"];
+    NSString * db_bundle=[[NSBundle bundleForClass:[self class]]pathForResource:@"DDPhotoPicker" ofType:@"bundle"];
     NSString * pathString = [db_bundle stringByAppendingPathComponent:@"photo.png"];
     [self.takePhotoBtn setImage:[UIImage imageNamed:pathString] forState:UIControlStateNormal];
     [funcV addSubview:self.takePhotoBtn];

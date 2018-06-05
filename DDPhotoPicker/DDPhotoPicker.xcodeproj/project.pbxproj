@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42A11EB120C6662A0009C27B /* DDTakePhotoViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42A11EB020C6662A0009C27B /* DDTakePhotoViewController.bundle */; };
+		42A11EB620C666500009C27B /* DDPhotoPickerMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A11EB220C666500009C27B /* DDPhotoPickerMaskView.m */; };
+		42A11EB720C666500009C27B /* DDPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A11EB320C666500009C27B /* DDPhotoPickerController.m */; };
 		42E368E32088687500D5EA11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E368E22088687500D5EA11 /* AppDelegate.m */; };
 		42E368E62088687500D5EA11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E368E52088687500D5EA11 /* ViewController.m */; };
 		42E368E92088687500D5EA11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42E368E72088687500D5EA11 /* Main.storyboard */; };
@@ -17,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		42A11EB020C6662A0009C27B /* DDTakePhotoViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DDTakePhotoViewController.bundle; sourceTree = "<group>"; };
+		42A11EB220C666500009C27B /* DDPhotoPickerMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPhotoPickerMaskView.m; sourceTree = "<group>"; };
+		42A11EB320C666500009C27B /* DDPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPhotoPickerController.m; sourceTree = "<group>"; };
+		42A11EB420C666500009C27B /* DDPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPhotoPickerController.h; sourceTree = "<group>"; };
+		42A11EB520C666500009C27B /* DDPhotoPickerMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPhotoPickerMaskView.h; sourceTree = "<group>"; };
 		42E368DE2088687500D5EA11 /* DDPhotoPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDPhotoPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42E368E12088687500D5EA11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		42E368E22088687500D5EA11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,6 +50,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42A11EAF20C6662A0009C27B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				42A11EB020C6662A0009C27B /* DDTakePhotoViewController.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		42E368D52088687500D5EA11 = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +77,7 @@
 		42E368E02088687500D5EA11 /* DDPhotoPicker */ = {
 			isa = PBXGroup;
 			children = (
+				42A11EAF20C6662A0009C27B /* Resources */,
 				42E368F72088688500D5EA11 /* Classes */,
 				42E368E12088687500D5EA11 /* AppDelegate.h */,
 				42E368E22088687500D5EA11 /* AppDelegate.m */,
@@ -78,6 +95,10 @@
 		42E368F72088688500D5EA11 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				42A11EB520C666500009C27B /* DDPhotoPickerMaskView.h */,
+				42A11EB220C666500009C27B /* DDPhotoPickerMaskView.m */,
+				42A11EB420C666500009C27B /* DDPhotoPickerController.h */,
+				42A11EB320C666500009C27B /* DDPhotoPickerController.m */,
 				42E368F8208868BD00D5EA11 /* DDPhotoPicker.h */,
 				42E368F9208868BD00D5EA11 /* DDPhotoPicker.m */,
 			);
@@ -141,6 +162,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42A11EB120C6662A0009C27B /* DDTakePhotoViewController.bundle in Resources */,
 				42E368EE2088687600D5EA11 /* LaunchScreen.storyboard in Resources */,
 				42E368EB2088687600D5EA11 /* Assets.xcassets in Resources */,
 				42E368E92088687500D5EA11 /* Main.storyboard in Resources */,
@@ -154,6 +176,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42A11EB720C666500009C27B /* DDPhotoPickerController.m in Sources */,
+				42A11EB620C666500009C27B /* DDPhotoPickerMaskView.m in Sources */,
 				42E368E62088687500D5EA11 /* ViewController.m in Sources */,
 				42E368F12088687600D5EA11 /* main.m in Sources */,
 				42E368FA208868BD00D5EA11 /* DDPhotoPicker.m in Sources */,

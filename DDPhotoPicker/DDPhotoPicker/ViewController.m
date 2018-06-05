@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "DDPhotoPicker.h"
+#import "DDPhotoPickerController.h"
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIView *preView;
 @property (weak, nonatomic) IBOutlet UIImageView *placeIV;
@@ -35,6 +36,33 @@
     [self.phonePicker shutterCamera];
 }
 
+- (IBAction)openModal:(id)sender {
+    [DDPhotoPicker getAuthorization:^(BOOL flag) {
+        if (flag) {
+            DDPhotoPickerController * pickVC= [[DDPhotoPickerController alloc]init];
+            pickVC.takePhotoCallback = ^(UIImage *image) {
+                self.placeIV.image=image;
+            };
+            [self presentViewController:pickVC animated:YES completion:nil];
+            
+        }else{
+            NSLog(@"需要开启摄像头权限");
+        }
+    }];
+}
+- (IBAction)push:(id)sender {
+    [DDPhotoPicker getAuthorization:^(BOOL flag) {
+        if (flag) {
+            DDPhotoPickerController * pickVC= [[DDPhotoPickerController alloc]init];
+            pickVC.takePhotoCallback = ^(UIImage *image) {
+                self.placeIV.image=image;
+            };
+            [self.navigationController pushViewController:pickVC animated:YES];
+        }else{
+            NSLog(@"需要开启摄像头权限");
+        }
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

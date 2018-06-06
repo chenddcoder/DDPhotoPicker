@@ -8,14 +8,14 @@
 
 #import "DDPhotoPicker.h"
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
 #define kScreenWidth UIScreen.mainScreen.bounds.size.width
 #define kScreenHeight UIScreen.mainScreen.bounds.size.height
 @interface DDPhotoPicker()
 @property (nonatomic, strong) AVCaptureSession * session;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer  * previewLayer;
 @property (nonatomic, strong) UIView * preView;
 @property (nonatomic, strong) UIImageView * shutterImageView;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer  * previewLayer;
+@property (nonatomic, strong) AVCaptureDeviceInput * videoInput;
 @end
 @implementation DDPhotoPicker
 -(instancetype)initWithPreView:(UIView *)preView andShutterImageView:(UIImageView *)shutterImageView;{
@@ -69,6 +69,48 @@
         self.previewLayer = nil;
     }
 }
+-(void)focus:(CGPoint)point{
+    //将界面point对应到摄像头point
+    CGPoint cameraPoint = [self.previewLayer captureDevicePointOfInterestForPoint:point];
+    
+    //设置聚光点坐标
+    [self focusWithMode:AVCaptureFocusModeAutoFocus exposureMode:AVCaptureExposureModeAutoExpose atPoint:cameraPoint];
+    
+}
+/**设置聚焦点*/
+-(void)focusWithMode:(AVCaptureFocusMode)focusMode exposureMode:(AVCaptureExposureMode)exposureMode atPoint:(CGPoint)point{
+    
+    AVCaptureDevice *captureDevice= [self.videoInput device];
+    NSError *error = nil;
+    //设置设备属性必须先解锁 然后加锁
+    if ([captureDevice lockForConfiguration:&error]) {
+        
+        if ([captureDevice isFocusModeSupported:focusMode]) {
+            [captureDevice setFocusMode:focusMode];
+        }
+        if ([captureDevice isFocusPointOfInterestSupported]) {
+            [captureDevice setFocusPointOfInterest:point];
+        }
+        //        //曝光
+        //        if ([captureDevice isExposureModeSupported:exposureMode]) {
+        //            [captureDevice setExposureMode:exposureMode];
+        //        }
+        //        if ([captureDevice isExposurePointOfInterestSupported]) {
+        //            [captureDevice setExposurePointOfInterest:point];
+        //        }
+        //        //闪光灯模式
+        //        if ([captureDevice isFlashModeSupported:AVCaptureFlashModeAuto]) {
+        //            [captureDevice setFlashMode:AVCaptureFlashModeAuto];
+        //        }
+        
+        //加锁
+        [captureDevice unlockForConfiguration];
+        
+    }else{
+        NSLog(@"设置设备属性过程发生错误，错误信息：%@",error.localizedDescription);
+    }
+}
+
 //获取授权
 +(void)getAuthorization:(void (^)(BOOL flag))callback
 {
@@ -106,14 +148,14 @@
 -(void)createSession{
     if (!self.session) {
         self.session = [[AVCaptureSession alloc] init];
-        AVCaptureDeviceInput * videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backCamera] error:nil];
+        self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backCamera] error:nil];
         AVCaptureStillImageOutput * stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
         NSDictionary * outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG,AVVideoCodecKey, nil];
         //这是输出流的设置参数AVVideoCodecJPEG参数表示以JPEG的图片格式输出图片
         [stillImageOutput setOutputSettings:outputSettings];
         
-        if ([self.session canAddInput:videoInput]) {
-            [self.session addInput:videoInput];
+        if ([self.session canAddInput:self.videoInput]) {
+            [self.session addInput:self.videoInput];
         }
         if ([self.session canAddOutput:stillImageOutput]) {
             [self.session addOutput:stillImageOutput];

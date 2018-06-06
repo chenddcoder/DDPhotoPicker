@@ -13,8 +13,6 @@
 #define kScreenWidth UIScreen.mainScreen.bounds.size.width
 #define kScreenHeight UIScreen.mainScreen.bounds.size.height
 @interface DDPhotoPickerController ()
-@property (nonatomic, strong) AVCaptureSession * session;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer  * previewLayer;
 @property (strong, nonatomic)  DDPhotoPickerMaskView *maskView;
 @property (nonatomic, strong) DDPhotoPicker * photoPicker;
 @property (nonatomic, assign) BOOL currentNavHidden;
@@ -29,6 +27,9 @@
     self.orientation=UIImageOrientationLeft;
     [self.view addSubview:self.maskView];
     self.photoPicker=  [[DDPhotoPicker alloc]initWithPreView:self.maskView andShutterImageView:self.maskView.placeIV];
+    //添加点按聚焦手势
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapScreen:)];
+    [self.maskView addGestureRecognizer:tapGesture];
     __weak typeof(self) weakSelf=self;
     self.maskView.takePhotoClicked = ^{
         [weakSelf.photoPicker shutterCamera];
@@ -84,6 +85,12 @@
 -(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }
+- (void)tapScreen:(UITapGestureRecognizer *)tap {
+    CGPoint point = [tap locationInView:self.maskView];
+    [self.photoPicker focus:point];
+    
+}
+
 - (UIImage *)rotateImage:(UIImage *)image rotation:(UIImageOrientation)orientation
 {
     CGRect bnds = CGRectZero;

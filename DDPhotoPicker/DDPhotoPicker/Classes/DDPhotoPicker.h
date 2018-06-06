@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 @interface DDPhotoPicker : NSObject
 /**
  判断权限使用，调用组件前先调用此方法
@@ -20,4 +21,5 @@
 -(void)startCap;
 -(void)shutterCamera;
 -(void)stopCap;
+-(void)focus:(CGPoint)point;//需要获得preView中的point locationInView
 @end

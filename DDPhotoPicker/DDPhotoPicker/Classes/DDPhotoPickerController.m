@@ -10,9 +10,10 @@
 #import "DDPhotoPickerMaskView.h"
 #import "DDPhotoPicker.h"
 #import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 #define kScreenWidth UIScreen.mainScreen.bounds.size.width
 #define kScreenHeight UIScreen.mainScreen.bounds.size.height
-@interface DDPhotoPickerController ()
+@interface DDPhotoPickerController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (strong, nonatomic)  DDPhotoPickerMaskView *maskView;
 @property (nonatomic, strong) DDPhotoPicker * photoPicker;
 @property (nonatomic, assign) BOOL currentNavHidden;
@@ -30,6 +31,7 @@
     //添加点按聚焦手势
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapScreen:)];
     [self.maskView addGestureRecognizer:tapGesture];
+
     __weak typeof(self) weakSelf=self;
     self.maskView.takePhotoClicked = ^{
         [weakSelf.photoPicker shutterCamera];
@@ -60,6 +62,28 @@
             weakSelf.takePhotoCallback(rotateImage);
         }
     };
+    self.maskView.photoLibPick = ^{
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            switch (status) {
+                case PHAuthorizationStatusAuthorized:
+                    NSLog(@"PHAuthorizationStatusAuthorized");
+                    break;
+                case PHAuthorizationStatusDenied:
+                    NSLog(@"PHAuthorizationStatusDenied");
+                    break;
+                case PHAuthorizationStatusNotDetermined:
+                    NSLog(@"PHAuthorizationStatusNotDetermined");
+                    break;
+                case PHAuthorizationStatusRestricted:
+                    NSLog(@"PHAuthorizationStatusRestricted");
+                    break;
+            }
+        }];
+        UIImagePickerController * picker=[[UIImagePickerController alloc]init];
+        picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        picker.delegate=weakSelf;
+        [weakSelf presentViewController:picker animated:YES completion:nil];
+    };
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -71,6 +95,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.photoPicker stopCap];
     if (self.navigationController) {
         [self.navigationController setNavigationBarHidden:self.currentNavHidden animated:YES];
     }
@@ -191,6 +216,25 @@
     return rect;
 }
 
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    //获取图片
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    if (self.takePhotoCallback) {
+        self.takePhotoCallback(image);
+    }
+    
+}
+
+//用户取消选择
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

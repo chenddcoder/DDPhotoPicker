@@ -15,4 +15,5 @@
 @property (nonatomic, copy) void(^takePhotoCancle)(void);
 @property (nonatomic, copy) void(^takePhotoReTake)(void);
 @property (nonatomic, copy) void(^takePhotoSubmit)(void);
+@property (nonatomic, copy) void(^photoLibPick)(void);
 @end

@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIImageView * shutterImageView;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer  * previewLayer;
 @property (nonatomic, strong) AVCaptureDeviceInput * videoInput;
+@property (nonatomic, assign) BOOL isCap;
 @end
 @implementation DDPhotoPicker
 -(instancetype)initWithPreView:(UIView *)preView andShutterImageView:(UIImageView *)shutterImageView;{
@@ -53,21 +54,28 @@
     }];
 }
 -(void)startCap{
-    [self createSession];
-    if (self.session) {
-        [self.session startRunning];
+    if (!self.isCap) {
+        [self createSession];
+        if (self.session) {
+            [self.session startRunning];
+        }
+        [self setUpCameraLayer:self.preView];
+        self.isCap=YES;
     }
-    [self setUpCameraLayer:self.preView];
 }
 -(void)stopCap{
-    if (self.session) {
-        [self.session stopRunning];
-        self.session=nil;
+    if (self.isCap) {
+        if (self.session) {
+            [self.session stopRunning];
+            self.session=nil;
+        }
+        if (self.previewLayer) {
+            [self.previewLayer removeFromSuperlayer];
+            self.previewLayer = nil;
+        }
+        self.isCap=NO;
     }
-    if (self.previewLayer) {
-        [self.previewLayer removeFromSuperlayer];
-        self.previewLayer = nil;
-    }
+    
 }
 -(void)focus:(CGPoint)point{
     //将界面point对应到摄像头point

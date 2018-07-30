@@ -12,6 +12,7 @@
 @property (strong, nonatomic)  UIButton *cancleBtn;
 @property (strong, nonatomic)  UIButton *submitBtn;
 @property (strong, nonatomic)  UIButton *retakeBtn;
+@property (strong, nonatomic) UIButton * photoLibBtn;
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIView *pickView;
 @property (nonatomic, strong) CAShapeLayer *fillLayer ;
@@ -35,6 +36,7 @@
     [self.cancleBtn addTarget:self action:@selector(cancleClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.submitBtn addTarget:self action:@selector(submitClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.retakeBtn addTarget:self action:@selector(reTakeClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.photoLibBtn addTarget:self action:@selector(photoLibClicked:) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void)layoutV:(UIView*)v{
     float width=v.bounds.size.width;
@@ -66,6 +68,15 @@
     [self.cancleBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     [funcV addSubview:self.cancleBtn];
     self.cancleBtn.frame=CGRectMake(self.takePhotoBtn.frame.origin.x-44-88, (115-44)/2, 88, 44);
+    
+    //相册按钮
+    self.photoLibBtn=[UIButton buttonWithType:UIButtonTypeSystem];
+    [funcV addSubview:self.photoLibBtn];
+    [self.photoLibBtn setTitle:@"相 册" forState:UIControlStateNormal];
+    self.photoLibBtn.titleLabel.font=[UIFont systemFontOfSize:18];
+    [self.photoLibBtn setTitleColor:[UIColor colorWithRed:0 green:153.00/255 blue:1 alpha:1] forState:UIControlStateNormal];
+    self.photoLibBtn.frame=CGRectMake(self.takePhotoBtn.frame.origin.x+self.takePhotoBtn.frame.size.width+44, (115-44)/2, 88, 44);
+    
     self.retakeBtn=[UIButton buttonWithType:UIButtonTypeSystem];
     [self.retakeBtn setTitle:@"重新拍摄" forState:UIControlStateNormal];
     self.retakeBtn.titleLabel.font=[UIFont systemFontOfSize:18];
@@ -108,11 +119,13 @@
     if (isTakePhoto) {
         self.takePhotoBtn.hidden=NO;
         self.cancleBtn.hidden=NO;
+        self.photoLibBtn.hidden=NO;
         self.retakeBtn.hidden=YES;
         self.submitBtn.hidden=YES;
     }else{
         self.takePhotoBtn.hidden=YES;
         self.cancleBtn.hidden=YES;
+        self.photoLibBtn.hidden=YES;
         self.retakeBtn.hidden=NO;
         self.submitBtn.hidden=NO;
     }
@@ -142,5 +155,10 @@
         self.takePhotoSubmit();
     }
 }
-
+-(void)photoLibClicked:(id)sender{
+    if(self.photoLibPick){
+        self.photoLibPick();
+    }
+    
+}
 @end

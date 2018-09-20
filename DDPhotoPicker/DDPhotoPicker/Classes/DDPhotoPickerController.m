@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor=UIColor.whiteColor;
     self.maskView=[[DDPhotoPickerMaskView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     self.orientation=UIImageOrientationLeft;
     [self.view addSubview:self.maskView];

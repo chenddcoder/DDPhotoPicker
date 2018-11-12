@@ -16,7 +16,6 @@
 @property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIView *pickView;
 @property (nonatomic, strong) CAShapeLayer *fillLayer ;
-@property (nonatomic, assign) BOOL isTakePhoto;
 @end
 @implementation DDPhotoPickerMaskView
 -(instancetype)initWithFrame:(CGRect)frame{

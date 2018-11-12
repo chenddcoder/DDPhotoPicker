@@ -11,6 +11,7 @@
 @interface DDPhotoPickerMaskView : UIView
 
 @property (strong, nonatomic) UIImageView *placeIV;
+@property (nonatomic, assign) BOOL isTakePhoto;
 @property (nonatomic, copy) void(^takePhotoClicked)(void);
 @property (nonatomic, copy) void(^takePhotoCancle)(void);
 @property (nonatomic, copy) void(^takePhotoReTake)(void);

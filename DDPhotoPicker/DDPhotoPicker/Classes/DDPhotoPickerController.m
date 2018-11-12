@@ -87,6 +87,7 @@
     };
     if (self.currentImg) {
         self.maskView.placeIV.image=self.currentImg;
+        self.maskView.isTakePhoto=NO;
     }
 }
 -(void)viewWillAppear:(BOOL)animated{

@@ -85,6 +85,9 @@
         picker.delegate=weakSelf;
         [weakSelf presentViewController:picker animated:YES completion:nil];
     };
+    if (self.currentImg) {
+        self.maskView.placeIV.image=self.currentImg;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -103,7 +106,9 @@
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self.photoPicker startCap];
+    if (!self.currentImg) {
+        [self.photoPicker startCap];
+    }
 }
 -(BOOL)prefersStatusBarHidden{
     return YES;

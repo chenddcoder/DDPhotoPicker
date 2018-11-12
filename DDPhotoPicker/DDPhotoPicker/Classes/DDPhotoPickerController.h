@@ -11,4 +11,5 @@
 @interface DDPhotoPickerController : UIViewController
 @property (nonatomic, assign) UIImageOrientation orientation;//默认UIImageOrientationLeft
 @property (nonatomic, copy) void (^takePhotoCallback)(UIImage * image);
+@property (nonatomic, strong) UIImage * currentImg;
 @end

@@ -86,7 +86,8 @@
         [weakSelf presentViewController:picker animated:YES completion:nil];
     };
     if (self.currentImg) {
-        self.maskView.placeIV.image=self.currentImg;
+        UIImage * rotateImage=[weakSelf rotateImage:self.currentImg rotation:UIImageOrientationRight];
+        self.maskView.placeIV.image=rotateImage;
         self.maskView.isTakePhoto=NO;
     }
 }

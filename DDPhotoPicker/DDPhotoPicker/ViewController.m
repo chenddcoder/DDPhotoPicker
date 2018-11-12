@@ -40,6 +40,7 @@
     [DDPhotoPicker getAuthorization:^(BOOL flag) {
         if (flag) {
             DDPhotoPickerController * pickVC= [[DDPhotoPickerController alloc]init];
+            pickVC.currentImg=self.placeIV.image;
             pickVC.takePhotoCallback = ^(UIImage *image) {
                 self.placeIV.image=image;
             };
@@ -54,6 +55,7 @@
     [DDPhotoPicker getAuthorization:^(BOOL flag) {
         if (flag) {
             DDPhotoPickerController * pickVC= [[DDPhotoPickerController alloc]init];
+            pickVC.currentImg=self.placeIV.image;
             pickVC.takePhotoCallback = ^(UIImage *image) {
                 self.placeIV.image=image;
             };
